@@ -38,10 +38,6 @@ router.post("/article/:articleId", async (req, res) => {
 
     const newComment = await comment.save();
 
-    // Update the article with the new comment's ID
-    article.comments.push(newComment._id);
-    await article.save();
-
     res.status(201).json(newComment);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -56,10 +52,6 @@ router.delete("/:id", getComment, async (req, res) => {
     if (!article) {
       return res.status(404).json({ message: "Article not found" });
     }
-    // Remove comment ID from the article's comments array
-    article.comments.pull(res.comment);
-    await article.save();
-
     await CommentModel.deleteOne({ _id: req.params.id }); // Use deleteOne here
     res.json({ message: "Deleted Comment" });
   } catch (err) {

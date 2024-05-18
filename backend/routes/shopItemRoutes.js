@@ -26,11 +26,13 @@ router.get("/:id", getShopItem, (req, res) => {
 router.post("/", upload.array("images"), async (req, res) => {
   const allowedMimeTypes = ["image/jpeg", "image/png"];
 
-  for (const file of req.files) {
-    if (!allowedMimeTypes.includes(file.mimetype)) {
-      return res.status(400).json({
-        message: "Invalid file type. Only JPEG and PNG images allowed.",
-      });
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      if (!allowedMimeTypes.includes(file.mimetype)) {
+        return res.status(400).json({
+          message: "Invalid file type. Only JPEG and PNG images allowed.",
+        });
+      }
     }
   }
   const shopItem = new ShopItemModel({
@@ -39,10 +41,13 @@ router.post("/", upload.array("images"), async (req, res) => {
     description: req.body.description,
     price: req.body.price,
     stock: req.body.stock,
-    images: req.files.map((file) => ({
-      data: file.buffer,
-      contentType: file.mimetype,
-    })),
+    images:
+    req.files && req.files.length > 0
+      ? req.files.map((file) => ({
+          data: file.buffer,
+          contentType: file.mimetype,
+        }))
+      : null,
   });
   try {
     const newShopItem = await shopItem.save();
