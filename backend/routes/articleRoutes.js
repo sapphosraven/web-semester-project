@@ -27,11 +27,13 @@ router.post("/", upload.array("images"), async (req, res) => {
   const allowedMimeTypes = ["image/jpeg", "image/png"];
 
   // Validate image types
-  for (const file of req.files) {
-    if (!allowedMimeTypes.includes(file.mimetype)) {
-      return res.status(400).json({
-        message: "Invalid file type. Only JPEG and PNG images allowed.",
-      });
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      if (!allowedMimeTypes.includes(file.mimetype)) {
+        return res.status(400).json({
+          message: "Invalid file type. Only JPEG and PNG images allowed.",
+        });
+      }
     }
   }
 
@@ -41,10 +43,13 @@ router.post("/", upload.array("images"), async (req, res) => {
     content: req.body.content,
     author: req.body.author,
     category: req.body.category,
-    images: req.files.map((file) => ({
-      data: file.buffer,
-      contentType: file.mimetype,
-    })),
+    images:
+      req.files && req.files.length > 0
+        ? req.files.map((file) => ({
+            data: file.buffer,
+            contentType: file.mimetype,
+          }))
+        : null,
   });
 
   try {
@@ -59,13 +64,13 @@ router.patch("/:id", getArticle, upload.array("images"), async (req, res) => {
   const allowedMimeTypes = ["image/jpeg", "image/png"];
 
   // Validate image types
-  for (const file of req.files) {
-    if (!allowedMimeTypes.includes(file.mimetype)) {
-      return res
-        .status(400)
-        .json({
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      if (!allowedMimeTypes.includes(file.mimetype)) {
+        return res.status(400).json({
           message: "Invalid file type. Only JPEG and PNG images allowed.",
         });
+      }
     }
   }
   if (req.body.title != null) {
@@ -77,11 +82,13 @@ router.patch("/:id", getArticle, upload.array("images"), async (req, res) => {
   if (req.body.category != null) {
     res.article.category = req.body.category;
   }
-  if (req.files.length > 0) {
-    res.article.images = req.files.map((file) => ({
-      data: file.buffer,
-      contentType: file.mimetype,
-    }));
+  if (req.files) {
+    if (req.files.length > 0) {
+      res.article.images = req.files.map((file) => ({
+        data: file.buffer,
+        contentType: file.mimetype,
+      }));
+    }
   }
   try {
     const updatedArticle = await res.article.save();
@@ -94,7 +101,7 @@ router.patch("/:id", getArticle, upload.array("images"), async (req, res) => {
 // DELETE an article
 router.delete("/:id", getArticle, async (req, res) => {
   try {
-    await res.article.remove();
+    await ArticleModel.deleteOne({ _id: req.params.id });
     res.json({ message: "Deleted Article" });
   } catch (err) {
     res.status(500).json({ message: err.message });

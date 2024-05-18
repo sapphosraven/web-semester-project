@@ -56,13 +56,13 @@ router.post("/", upload.array("images"), async (req, res) => {
 router.patch("/:id", getShopItem, upload.array("images"), async (req, res) => {
   const allowedMimeTypes = ["image/jpeg", "image/png"];
 
-  for (const file of req.files) {
-    if (!allowedMimeTypes.includes(file.mimetype)) {
-      return res
-        .status(400)
-        .json({
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      if (!allowedMimeTypes.includes(file.mimetype)) {
+        return res.status(400).json({
           message: "Invalid file type. Only JPEG and PNG images allowed.",
         });
+      }
     }
   }
   if (req.body.name != null) {
@@ -77,12 +77,14 @@ router.patch("/:id", getShopItem, upload.array("images"), async (req, res) => {
   if (req.body.stock != null) {
     res.shopItem.stock = req.body.stock;
   }
-  if (req.files.length > 0) {
-    // Update images if provided
-    res.shopItem.images = req.files.map((file) => ({
-      data: file.buffer,
-      contentType: file.mimetype,
-    }));
+  if (req.files) {
+    if (req.files.length > 0) {
+      // Update images if provided
+      res.shopItem.images = req.files.map((file) => ({
+        data: file.buffer,
+        contentType: file.mimetype,
+      }));
+    }
   }
   try {
     const updatedShopItem = await res.shopItem.save();
@@ -95,7 +97,7 @@ router.patch("/:id", getShopItem, upload.array("images"), async (req, res) => {
 // DELETE a shop item
 router.delete("/:id", getShopItem, async (req, res) => {
   try {
-    await res.shopItem.remove();
+    await ShopItemModel.deleteOne({ _id: req.params.id });
     res.json({ message: "Deleted Shop Item" });
   } catch (err) {
     res.status(500).json({ message: err.message });

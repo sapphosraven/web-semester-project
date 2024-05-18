@@ -26,11 +26,9 @@ router.post("/", upload.single("image"), async (req, res) => {
   const allowedMimeTypes = ["image/jpeg", "image/png"];
 
   if (req.file && !allowedMimeTypes.includes(req.file.mimetype)) {
-    return res
-      .status(400)
-      .json({
-        message: "Invalid file type. Only JPEG and PNG images allowed.",
-      });
+    return res.status(400).json({
+      message: "Invalid file type. Only JPEG and PNG images allowed.",
+    });
   }
 
   const quiz = new QuizModel({
@@ -56,14 +54,17 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-
 // UPDATE a quiz
-router.patch('/:id', getQuiz, upload.single('image'), async (req, res) => {
-    const allowedMimeTypes = ['image/jpeg', 'image/png'];
+router.patch("/:id", getQuiz, upload.single("image"), async (req, res) => {
+  const allowedMimeTypes = ["image/jpeg", "image/png"];
 
-    if (req.file && !allowedMimeTypes.includes(req.file.mimetype)) {
-        return res.status(400).json({ message: 'Invalid file type. Only JPEG and PNG images allowed.' });
-    }
+  if (req.file && !allowedMimeTypes.includes(req.file.mimetype) && req.files.length > 0) {
+    return res
+      .status(400)
+      .json({
+        message: "Invalid file type. Only JPEG and PNG images allowed.",
+      });
+  }
   if (req.body.title) {
     res.quiz.title = req.body.title;
   }
@@ -88,10 +89,10 @@ router.patch('/:id', getQuiz, upload.single('image'), async (req, res) => {
   }
 });
 
-// DELETE a quiz by ID
+// DELETE a quiz
 router.delete("/:id", getQuiz, async (req, res) => {
   try {
-    await res.quiz.remove();
+    await QuizModel.deleteOne({ _id: req.params.id });
     res.json({ message: "Deleted Quiz" });
   } catch (err) {
     res.status(500).json({ message: err.message });

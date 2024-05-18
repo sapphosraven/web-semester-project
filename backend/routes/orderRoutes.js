@@ -66,7 +66,7 @@ router.patch("/:id", getOrder, async (req, res) => {
 // DELETE an order
 router.delete("/:id", getOrder, async (req, res) => {
   try {
-    await res.order.remove();
+    await OrderModel.deleteOne({ _id: req.params.id });
     res.json({ message: "Deleted Order" });
   } catch (err) {
     res.status(500).json({ message: err.message });

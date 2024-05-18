@@ -42,11 +42,9 @@ router.post("/", upload.single("profileImage"), async (req, res) => {
       // Image was uploaded
       const allowedMimeTypes = ["image/jpeg", "image/png"];
       if (!allowedMimeTypes.includes(req.file.mimetype)) {
-        return res
-          .status(400)
-          .json({
-            message: "Invalid file type. Only JPEG and PNG images allowed.",
-          });
+        return res.status(400).json({
+          message: "Invalid file type. Only JPEG and PNG images allowed.",
+        });
       }
 
       // If user doesn't exist, hash password and create new user
@@ -86,11 +84,9 @@ router.patch(
     const allowedMimeTypes = ["image/jpeg", "image/png"];
 
     if (req.file && !allowedMimeTypes.includes(req.file.mimetype)) {
-      return res
-        .status(400)
-        .json({
-          message: "Invalid file type. Only JPEG and PNG images allowed.",
-        });
+      return res.status(400).json({
+        message: "Invalid file type. Only JPEG and PNG images allowed.",
+      });
     }
 
     res.user.profileImage = {
@@ -137,7 +133,7 @@ router.patch("/:id", getUser, async (req, res) => {
 // DELETE a user
 router.delete("/:id", getUser, async (req, res) => {
   try {
-    await res.user.remove();
+    await UserModel.deleteOne({ _id: req.params.id }); // Use deleteOne()
     res.json({ message: "Deleted User" });
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -60,7 +60,7 @@ router.delete("/:id", getComment, async (req, res) => {
     article.comments.pull(res.comment);
     await article.save();
 
-    await res.comment.remove(); // Remove the comment itself
+    await CommentModel.deleteOne({ _id: req.params.id }); // Use deleteOne here
     res.json({ message: "Deleted Comment" });
   } catch (err) {
     res.status(500).json({ message: err.message });
