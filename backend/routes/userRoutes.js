@@ -63,7 +63,7 @@ router.patch('/:id', getUser, async (req, res) => {
     if (req.body.email != null) {
         res.user.email = req.body.email;
     }
-    if (req.body.password != null) { // Add this section for updating the password
+    if (req.body.password != null) { 
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         res.user.password = hashedPassword;
     }
