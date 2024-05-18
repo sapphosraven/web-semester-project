@@ -9,3 +9,4 @@ npm install express mongoose cors dotenv bcrypt faker mongodb multer jsonwebtoke
 In frontend directory:
 
 npm install axios react-router-dom
+npm install react-bootstrap bootstrap
