@@ -1,9 +1,3 @@
-const UserModel = require('./models/user');
-const ArticleModel = require('./models/article');
-const QuizModel = require('./models/quiz');
-const ShopItemModel = require('./models/shopItem');
-const OrderModel = require('./models/order');
-const CommentModel = require('./models/comment');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -21,8 +15,32 @@ mongoose.connect(process.env.MONGODB_URI, { // Get URI from .env
 }).then(() => {
 
     console.log('Connected to MongoDB')
-    
-  async function checkCollectionsExist() {
+
+    //only imported if connected
+    const UserModel = require('./models/user');
+    const ArticleModel = require('./models/article');
+    const QuizModel = require('./models/quiz');
+    const ShopItemModel = require('./models/shopItem');
+    const OrderModel = require('./models/order');
+    const CommentModel = require('./models/comment');
+
+    // Import Routes
+    const userRoutes = require('./routes/userRoutes');
+    const articleRoutes = require('./routes/articleRoutes');
+    const quizRoutes = require('./routes/quizRoutes');
+    const shopItemRoutes = require('./routes/shopItemRoutes');
+    const orderRoutes = require('./routes/orderRoutes');
+    const commentRoutes = require('./routes/commentRoutes');
+
+    // Use Routes
+    app.use('/users', userRoutes);
+    app.use('/articles', articleRoutes);
+    app.use('/quizzes', quizRoutes);
+    app.use('/shopItems', shopItemRoutes);
+    app.use('/orders', orderRoutes);
+    app.use('/comments', commentRoutes);
+
+    async function checkCollectionsExist() {
     const collections = await mongoose.connection.db.listCollections().toArray();
     const collectionNames = collections.map(collection => collection.name);
   
