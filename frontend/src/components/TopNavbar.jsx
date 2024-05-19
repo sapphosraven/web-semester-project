@@ -45,6 +45,9 @@ function TopNavbar() {
             <Nav.Link as={Link} to="/users/signup">
               Sign Up
             </Nav.Link>
+            <Nav.Link as={Link} to="./components/ProfilePage">
+              Profile
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
