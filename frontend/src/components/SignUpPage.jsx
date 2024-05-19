@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import "../global.css";
 
 function SignUpPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
@@ -27,10 +27,10 @@ function SignUpPage() {
       .post("/signup", { username, email, password })
       .then((response) => {
         setSuccess(true);
-        setUsername("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
+        setUsername();
+        setEmail();
+        setPassword();
+        setConfirmPassword();
         setTimeout(() => {
           navigate("/login"); // Redirect to login page after 2 seconds
         }, 2000);
