@@ -140,7 +140,6 @@ router.delete("/:id", getUser, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 // LOGIN route
 router.post("/login", async (req, res) => {
   try {
@@ -165,7 +164,21 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    res.json({ message: "Logged in successfully", token, userId: user._id }); // Send userId
+    // Set both token AND userId in cookies
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+      path: '/'
+    });
+    res.cookie("userId", user._id, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+      path: '/'
+    }); // Add this line
+
+    res.json({ message: "Logged in successfully", token, userId: user._id }); // This is still needed in the response
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
