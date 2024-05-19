@@ -20,7 +20,7 @@ function Sidebar() {
           </h4>
           <p className="mb-0">
             Formed in 2024, Motorsport is definitely, a website, that works most
-            of the time, . It is part of the efforts put in by a rag tag bunch
+            of the time. It is part of the efforts put in by a rag tag bunch
             of Students from BSCS-12-C. Its goal? To not crash every time we
             perform a basic crud operation.
           </p>
