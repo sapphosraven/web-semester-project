@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/logo.png"; // Import your logo image
 import "../global.css";
 import Cookies from "universal-cookie"; // Import the universal-cookie library
-import jwt_decode from "jwt-decode"; // Import jwt-decode to decode JWT tokens
+import {jwtDecode} from "jwt-decode"; // Import jwt-decode to decode JWT tokens
 
 const categories = [
   "F1",
@@ -28,7 +28,7 @@ function TopNavbar() {
 
     if (token) {
       try {
-        const decodedToken = jwt_decode(token);
+        const decodedToken = jwtDecode(token);
         setUserId(decodedToken.userId);
         setIsLoggedIn(true);
       } catch (error) {
@@ -65,6 +65,9 @@ function TopNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+            <Nav.Link as={Link} to="/shopItems">
+              ShopItems
+            </Nav.Link>
             {categories.map((category) => (
               <Nav.Link
                 as={Link}
@@ -78,6 +81,9 @@ function TopNavbar() {
           <Nav>
             {isLoggedIn ? (
               <>
+                <Button as={Link} to="/cart" variant="outline-primary" className="me-2">
+                Cart
+              </Button>
                 <Nav.Link as={Link} to={`/users/${userId}`}>
                   Profile
                 </Nav.Link>

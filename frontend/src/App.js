@@ -11,6 +11,9 @@ import Footer from "./components/BFooter";
 import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
 import ProfilePage from "./components/ProfilePage";
+import MerchPage from "./components/MerchPage";
+import ShopItemPage from "./components/ItemPage";
+import CartPage from "./components/CartPage";
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
           />
           <Route path="/users/${userId}" element={<ProfilePage />} />
 
+          <Route path="/shopItems" element={<MerchPage/>} />
+          <Route path="/shopItems/:id" element={<ShopItemPage/>} />
+          <Route path="/cart" element={<CartPage/>} />
         </Routes>
         <Footer />
       </Router>
