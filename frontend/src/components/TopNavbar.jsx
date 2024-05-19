@@ -39,10 +39,10 @@ function TopNavbar() {
             ))}
           </Nav>
           <Nav>
-            <Nav.Link as={Link} to="/login">
+            <Nav.Link as={Link} to="/users/login">
               Log In
             </Nav.Link>
-            <Nav.Link as={Link} to="/signup">
+            <Nav.Link as={Link} to="/users/signup">
               Sign Up
             </Nav.Link>
           </Nav>

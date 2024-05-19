@@ -142,7 +142,7 @@ router.delete("/:id", getUser, async (req, res) => {
 });
 
 // LOGIN route
-router.post("/login", async (req, res) => {
+router.post("/user/login", async (req, res) => {
   try {
     const user = await UserModel.findOne({ username: req.body.username });
     if (!user) return res.status(401).json({ message: "Invalid username" });
@@ -229,7 +229,7 @@ router.post("/signup", upload.single("profileImage"), async (req, res) => {
 });
 
 // LOGOUT route
-router.post("/logout", (req, res) => {
+router.post("/user/logout", (req, res) => {
   // Clear the token cookie
   res.clearCookie("token", { httpOnly: true });
   res.sendStatus(200); // OK (or send a JSON response if you prefer)

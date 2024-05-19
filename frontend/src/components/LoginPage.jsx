@@ -11,7 +11,7 @@ function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/login", {
+      const response = await axios.post("/users/login", {
         username,
         password,
       });
