@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 // GET all articles (optional query parameter for category)
 router.get("/", async (req, res) => {
   try {
@@ -14,7 +13,6 @@ router.get("/", async (req, res) => {
     if (req.query.category) {
       query.category = req.query.category.toLowerCase(); // Make category lowercase for case-insensitive matching
     }
-
     const articles = await ArticleModel.find(query).populate(
       "author",
       "username"
@@ -117,8 +115,9 @@ router.delete("/:id", getArticle, async (req, res) => {
 
 // Middleware to get an article by ID
 async function getArticle(req, res, next) {
+  let article;
   try {
-    const article = await ArticleModel.findById(req.params.id).populate(
+    article = await ArticleModel.findById(req.params.id).populate(
       "author",
       "username"
     );
