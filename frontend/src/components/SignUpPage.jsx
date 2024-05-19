@@ -41,14 +41,15 @@ function SignUpPage() {
   };
 
   return (
-    <Container className="text-white position-relative" fluid>
+    <Container className="text-white position-relative" style={{ minHeight: 'calc(100vh - 185px)' }} fluid>
       <Row className="justify-content-md-center">
         <Col md={6}>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {success && (
             <Alert variant="success">
-              Sign up successful! Redirecting to <a href="/users/login">log in</a> page...
+              Sign up successful! Redirecting to{" "}
+              <a href="/users/login">log in</a> page...
             </Alert>
           )}
           {!success && (
@@ -97,7 +98,7 @@ function SignUpPage() {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button type="submit" classname="btn btn-primary">
                 Sign Up
               </Button>
             </Form>

@@ -10,6 +10,7 @@ import CategoryPage from "./components/CategoryPage";
 import Footer from "./components/BFooter";
 import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
             path="/articles/category/:category"
             element={<CategoryPage />}
           />
+          <Route path="/users/${userId}" element={<ProfilePage />} />
+
         </Routes>
         <Footer />
       </Router>
