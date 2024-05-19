@@ -33,7 +33,7 @@ function TopNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {categories.map((category) => (
-              <Nav.Link as={Link} to={`/articles/${category.toLowerCase()}`} key={category}>
+              <Nav.Link as={Link} to={`/articles/category/${category.toLowerCase()}`} key={category}>
                 {category}
               </Nav.Link>
             ))}
