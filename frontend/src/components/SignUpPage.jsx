@@ -41,7 +41,7 @@ function SignUpPage() {
   };
 
   return (
-    <Container className="text-white position-relative" fluid>
+    <Container className="text-white position-relative" style={{ minHeight: 'calc(100vh - 185px)' }} fluid>
       <Row className="justify-content-md-center">
         <Col md={6}>
           <h2 className="text-center mb-4">Sign Up</h2>

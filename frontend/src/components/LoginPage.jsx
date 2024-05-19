@@ -30,10 +30,13 @@ function LoginPage() {
   };
 
   return (
-    <Container className="text-white position-relative">
+    <Container
+      className="text-white position-relative"
+      style={{ minHeight: "calc(100vh - 185px)" }}
+    >
       <Row className="justify-content-md-center">
         <Col md={6}>
-          <h2>Login</h2>
+          <h2 className="text-center mb-4">Login</h2>
           {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -44,6 +47,7 @@ function LoginPage() {
                 type="text"
                 className="form-control"
                 id="username"
+                placeholder="Enter username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -57,6 +61,7 @@ function LoginPage() {
                 type="password"
                 className="form-control"
                 id="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
