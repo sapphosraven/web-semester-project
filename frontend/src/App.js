@@ -24,7 +24,7 @@ function App() {
           <Route path="/articles/:id" element={<ArticlePage />} />
 
         </Routes>
-        <Footer />
+        <Footer/>
       </Router>
 
     </div>
