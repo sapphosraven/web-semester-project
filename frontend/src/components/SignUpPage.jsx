@@ -24,7 +24,7 @@ function SignUpPage() {
     }
 
     axios
-      .post("/signup", { username, email, password })
+      .post("/users/signup", { username, email, password })
       .then((response) => {
         setSuccess(true);
         setUsername();
@@ -32,7 +32,7 @@ function SignUpPage() {
         setPassword();
         setConfirmPassword();
         setTimeout(() => {
-          navigate("/login"); // Redirect to login page after 2 seconds
+          navigate("/users/login"); // Redirect to login page after 2 seconds
         }, 2000);
       })
       .catch((error) => {
@@ -48,7 +48,7 @@ function SignUpPage() {
           {error && <Alert variant="danger">{error}</Alert>}
           {success && (
             <Alert variant="success">
-              Sign up successful! Redirecting to <a href="/login">log in</a> page...
+              Sign up successful! Redirecting to <a href="/users/login">log in</a> page...
             </Alert>
           )}
           {!success && (
