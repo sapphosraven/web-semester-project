@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 //import ArticlePage from "./components/ArticlePage";
 import TopNavbar from "./components/TopNavbar";
 //import CategoryPage from "./components/CategoryPage"; // Import your new component
+import Footer from "./components/BFooter";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} /> 
       </Routes>
+      <Footer />
     </Router>
     </div>
   );

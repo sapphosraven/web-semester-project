@@ -7,10 +7,7 @@ const quizSchema = new mongoose.Schema({
         options: [String],
         correctAnswer: String,
     }],
-    images: [{
-        data: Buffer,
-        contentType: String,
-    }],
+   
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
