@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import "../global.css";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -17,7 +19,8 @@ function LoginPage() {
       });
       if (response.data.token) {
         // Login successful, redirect to home page
-        Navigate("/");
+        console.log ("login sucessfull");
+        navigate("/");
       } else {
         setError("Invalid username or password");
       }
