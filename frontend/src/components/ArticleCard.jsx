@@ -20,7 +20,7 @@ function ArticleCard({ article }) {
       {/* Added bg-dark and text-white classes and added height for uniformity */}
       <Card.Img variant="top" src={imageSrc} />
       <Card.Body>
-        <Card.Title className="h5" style={({ color: " color: #7c440b;"  })}>{article.title}</Card.Title>{" "}
+        <Card.Title className="h5" style={({ color: " color: #7c440b"  })}>{article.title}</Card.Title>{" "}
         {/* Changed title to h5 */}
         <Card.Text>{article.content.substring(0, 100)}...</Card.Text>
         <Button

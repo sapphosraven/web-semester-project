@@ -116,7 +116,8 @@ router.delete("/:id", getArticle, async (req, res) => {
 // GET all articles of a specific category
 router.get("/category/:category", async (req, res) => {
   try {
-    const category = req.params.category.toLowerCase();
+    console.log("Received category:", req.params.category);
+    const category = req.params.category.toUpperCase();
 
     const articles = await ArticleModel.find({ category }).populate(
       "author",
