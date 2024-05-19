@@ -1,9 +1,10 @@
-import React, { useState, useLayoutEffect } from "react";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../img/logo.png"; // Import your logo image
+import { AuthContext } from "./AuthContext";
+import logo from "../img/logo.png";
 import "../global.css";
-import Cookies from "universal-cookie"; // Import the universal-cookie library
+import Cookies from "universal-cookie";
 const jwt_decode = require("jwt-decode"); // Correct import
 
 const categories = [
@@ -18,43 +19,34 @@ const categories = [
 ];
 
 function TopNavbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, user, logout, login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(null);
-  const [tokenSet, setTokenSet] = useState(false);
 
-  useLayoutEffect(() => {
-    if (tokenSet) {
-      const cookies = new Cookies();
-      const token = cookies.get("token");
-      if (token) {
-        console.log("a");
-        try {
-          const decodedToken = jwt_decode(token);
-          setUserId(decodedToken.userId);
-          setIsLoggedIn(true);
-        } catch (error) {
-          console.error("Invalid token:", error);
-          cookies.remove("token");
-          setIsLoggedIn(false);
-        }
+  useEffect(() => {
+    const cookies = new Cookies();
+    const token = cookies.get("token");
+    if (token) {
+      try {
+        const decodedToken = jwt_decode(token);
+        login(decodedToken);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        cookies.remove("token");
       }
     }
-  }, [tokenSet]);
+  }, []);
 
   const handleLogout = () => {
     const cookies = new Cookies();
     cookies.remove("token");
-    cookies.remove("userId"); // Remove userId cookie as well
-    setIsLoggedIn(false);
+    logout(); // Call the logout function from context
     navigate("/");
   };
 
   return (
     <Navbar expand="lg" className="mb-4 custom-navbar">
-      {" "}
-      {/* Add custom-navbar class */}
       <Container fluid>
+        {/* Logo and Brand */}
         <Navbar.Brand as={Link} to="/" className="ps-0">
           <img
             src={logo}
@@ -65,11 +57,10 @@ function TopNavbar() {
           />{" "}
           <span className="brand-text">Motorsport</span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/shopItems">
-              ShopItems
+              Merch
             </Nav.Link>
             {categories.map((category) => (
               <Nav.Link
@@ -84,20 +75,27 @@ function TopNavbar() {
           <Nav>
             {isLoggedIn ? (
               <>
-                <Button as={Link} to="/cart" variant="outline-primary" className="me-2">
-                Cart
-              </Button>
-                <Nav.Link as={Link} to={`/users/${userId}`}>
+                <Button
+                  as={Link}
+                  to="/cart"
+                  variant="outline-primary"
+                  className="me-2"
+                >
+                  Cart
+                </Button>
+                <Nav.Link as={Link} to={`/users/${user.userId}`}>
+                  {" "}
+                  {/* Use user.userId */}
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout}>Log Out</Nav.Link>
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="users/login">
+                <Nav.Link as={Link} to="/login">
                   Log In
                 </Nav.Link>
-                <Nav.Link as={Link} to="users/signup">
+                <Nav.Link as={Link} to="/signup">
                   Sign Up
                 </Nav.Link>
               </>

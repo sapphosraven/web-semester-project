@@ -4,7 +4,9 @@ In parent directory:
 
 npm init -y
 
-npm install express mongoose cors dotenv bcrypt faker mongodb multer jsonwebtoken crypto-random-string nodemailer
+npm install express mongoose cors dotenv bcrypt faker mongodb multer jsonwebtoken crypto-random-string nodemailer passport express-session
+
+npm install passport-local
 
 In frontend directory:
 

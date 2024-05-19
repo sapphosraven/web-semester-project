@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import Cookies from "universal-cookie";
-import jwt_decode from "jwt-decode";
 import axios from "axios";
+const jwt_decode = require("jwt-decode");
 
 const AuthContext = createContext({
   user: null,
