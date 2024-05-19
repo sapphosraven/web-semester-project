@@ -13,30 +13,33 @@ function ArticlePage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch the specific article by ID from your backend API
+    console.log("Fetching article with id:", id); 
     axios
       .get(`/articles/${id}`)
       .then((response) => {
+        console.log("Received response:", response.data);
         setArticle(response.data);
         setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching article:", error);
-        setError(error);
+        setError(error.message || "An error occurred"); // Set a more user-friendly error message
         setIsLoading(false);
       });
-  }, [id]);
+  }, [id]); 
 
   if (isLoading) {
     return <div style={{ color: "white" }}>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div style={{ color: "white" }}>Error: {error}</div>;
   }
 
-  return (
-    <Container className="text-white position-relative" fluid>
+  // If article exists and has content, display it
+  if (article && article.content) {
+    return (
+      <Container className="text-white position-relative" fluid>
       <Row>
         <Col md={8} className="mb-4">
           {article ? (
@@ -55,8 +58,12 @@ function ArticlePage() {
           <SideBar />
         </Col>
       </Row>
-    </Container>
-  );
+      </Container>
+    );
+  } else {
+    // Handle the case where article is not found or doesn't have content
+    return <div style={{ color: "white" }}>Article not found or content is missing.</div>;
+  }
 }
 
 export default ArticlePage;
