@@ -16,4 +16,4 @@ npm install --save @fortawesome/free-brands-svg-icons
 npm install --save @fortawesome/react-fontawesome
 npm install --save @fortawesome/free-solid-svg-icons
 npm install universal-cookie
-
+npm install jsonwebtoken crypto-random-string jwt-decode

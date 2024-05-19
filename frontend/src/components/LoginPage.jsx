@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import Cookies from "universal-cookie"; // Import the universal-cookie library
 import "../global.css";
 
 function LoginPage() {
@@ -17,10 +18,19 @@ function LoginPage() {
         username,
         password,
       });
+
       if (response.data.token) {
-        // Login successful, redirect to home page
         console.log("login sucessfull");
-        navigate("/");
+
+        // Set cookies and update tokenSet state:
+        const cookies = new Cookies();
+        cookies.set("token", response.data.token, { path: "/" });
+        cookies.set("userId", response.data.userId, { path: "/" });
+
+        // Delay before redirecting
+        setTimeout(() => {
+          navigate("/"); // Redirect after a delay
+        }, 200);
       } else {
         setError("Invalid username or password");
       }

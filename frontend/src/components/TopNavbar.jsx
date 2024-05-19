@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
+import React, { useState, useLayoutEffect } from "react";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/logo.png"; // Import your logo image
 import "../global.css";
 import Cookies from "universal-cookie"; // Import the universal-cookie library
-import {jwtDecode} from "jwt-decode"; // Import jwt-decode to decode JWT tokens
+const jwt_decode = require("jwt-decode"); // Correct import
 
 const categories = [
   "F1",
@@ -21,30 +21,33 @@ function TopNavbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
+  const [tokenSet, setTokenSet] = useState(false);
 
-  useEffect(() => {
-    const cookies = new Cookies();
-    const token = cookies.get("token"); // Get token from cookies
-
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        setUserId(decodedToken.userId);
-        setIsLoggedIn(true);
-      } catch (error) {
-        // Invalid token, clear local storage and set to not logged in
-        console.error("Invalid token:", error);
-        cookies.remove("token");
-        setIsLoggedIn(false);
+  useLayoutEffect(() => {
+    if (tokenSet) {
+      const cookies = new Cookies();
+      const token = cookies.get("token");
+      if (token) {
+        console.log("a");
+        try {
+          const decodedToken = jwt_decode(token);
+          setUserId(decodedToken.userId);
+          setIsLoggedIn(true);
+        } catch (error) {
+          console.error("Invalid token:", error);
+          cookies.remove("token");
+          setIsLoggedIn(false);
+        }
       }
     }
-  }, []);
+  }, [tokenSet]);
 
   const handleLogout = () => {
     const cookies = new Cookies();
     cookies.remove("token");
+    cookies.remove("userId"); // Remove userId cookie as well
     setIsLoggedIn(false);
-    navigate("/"); // Redirect to home page or any other page after logout
+    navigate("/");
   };
 
   return (
