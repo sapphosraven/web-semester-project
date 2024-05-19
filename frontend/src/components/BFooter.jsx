@@ -6,7 +6,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <span >© Your Company 2024</span>
+        <span >© 12C Motorsport 2024</span>
       </div>
     </footer>
   );
