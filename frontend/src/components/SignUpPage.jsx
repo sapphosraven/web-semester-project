@@ -41,8 +41,8 @@ function SignUpPage() {
   };
 
   return (
-    <Container className="text-white position-relative" fluid>
-      <Row className="justify-content-md-center">
+    <Container className="text-white position-relative h-100" fluid>
+      <Row className="justify-content-md-center h-100">
         <Col md={6}>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}

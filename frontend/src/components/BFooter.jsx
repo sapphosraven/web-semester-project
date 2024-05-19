@@ -4,7 +4,7 @@ import "../global.css";
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer fixed-bottom">
       <div className="container">
         <span >© 12C Motorsport 2024</span>
       </div>
