@@ -11,13 +11,13 @@ function CategoryPage() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
-  const articlesToDisplay = articles.slice(0, 9); // Display only the first 10 articles
 
   useEffect(() => {
     // Fetch latest articles from your backend API
     axios
-      .get("/articles/category/${category}")
+      .get("/articles")
       .then((response) => {
+        console.log("Received response: ", response.data);
         setArticles(response.data);
         setIsLoading(false); // Data fetched, set isLoading to false
       })
@@ -26,7 +26,7 @@ function CategoryPage() {
         setError(error); // Set error message
         setIsLoading(false); // Stop loading even if there's an error
       });
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, [category]);
 
   if (isLoading) {
     return <div style={{ color: "white" }}>Loading...</div>; // Show loading message while fetching data
@@ -35,6 +35,14 @@ function CategoryPage() {
   if (error) {
     return <div>Error: {error.message}</div>; // Show error message if fetching fails
   }
+
+  // Filter articles before displaying
+  const filteredArticles = articles.filter(
+    (article) => article.category.toLowerCase() === category.toLowerCase()
+  );
+
+  // Slice the filtered articles for the first 9
+  const articlesToDisplay = filteredArticles;
 
   return (
     <Container className="text-white position-relative" fluid>
