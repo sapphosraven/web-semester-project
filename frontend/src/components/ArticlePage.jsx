@@ -74,6 +74,11 @@ function ArticlePage() {
       return acc;
     }, []);
 
+    const formattedCreatedAt = new Date(article.createdAt).toLocaleDateString(
+      "en-US",
+      { year: "numeric", month: "long", day: "numeric" }
+    );
+
     return (
       <Container className="text-white position-relative" fluid>
         <Row>
@@ -82,6 +87,13 @@ function ArticlePage() {
               {article.category}
             </Badge>
             <h2 className="text-start mb-2">{article.title}</h2>
+            {/* Author and Date Information */}
+            {article.author && (
+              <p className="fst-italic">
+                By {article.author.username} <br></br> Published:{" "}
+                {formattedCreatedAt}
+              </p>
+            )}
             <hr className="horizontal-line" />
             {imageElements.length > 0 && imageElements[0]}
             <div className="article-content">{paragraphsWithImages}</div>
