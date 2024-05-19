@@ -113,14 +113,44 @@ router.delete("/:id", getArticle, async (req, res) => {
   }
 });
 
+// GET all articles of a specific category
+router.get("/category/:category", async (req, res) => {
+  try {
+    const category = req.params.category.toLowerCase();
+
+    const articles = await ArticleModel.find({ category }).populate(
+      "author",
+      "username"
+    );
+    if (!articles) {
+      return res
+        .status(404)
+        .json({ message: "No articles found for this category" });
+    }
+    res.json(articles);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET a specific article
+router.get("/article/:id", getArticle, (req, res) => {
+  res.json(res.article);
+});
 // Middleware to get an article by ID
 async function getArticle(req, res, next) {
   let article;
   try {
-    article = await ArticleModel.findById(req.params.id).populate(
-      "author",
-      "username"
-    );
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      // Check if ID is a valid ObjectId (24 hex characters)
+      article = await ArticleModel.findById(req.params.id).populate(
+        "author",
+        "username"
+      );
+    } else {
+      return res.status(404).json({ message: "Cannot find article" });
+    }
+
     if (article == null) {
       return res.status(404).json({ message: "Cannot find article" });
     }
@@ -130,5 +160,4 @@ async function getArticle(req, res, next) {
     return res.status(500).json({ message: err.message });
   }
 }
-
 module.exports = router;
