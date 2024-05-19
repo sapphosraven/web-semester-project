@@ -59,4 +59,19 @@ function HomePage() {
   );
 }
 
+//TODO for MVP, this is necessary and needs to be done before anything else, this is the minimal viable product, no compromises on this
+//TODO: add routing to display category pages fix that
+//TODO: make the login and signup pages
+//TODO: connect to the login and signup pages
+//TODO: make the profile page with conditional rendering for crud (all if admin, own if user)
+
+
+//TODO for improving everything, in order of decreasing priority
+//TODO: Add comments functionality, the front end of it, crud with backend, can only comment when signed in, can only delete own comment, no replies
+//TODO: Add quizzes
+//TODO: Add merch shop, check out, cart, and orders to profile after the fact
+
+
+
+
 export default HomePage;

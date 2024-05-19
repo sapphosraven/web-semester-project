@@ -7,16 +7,23 @@ const mongoose = require("mongoose");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// GET all articles
+// GET all articles (optional query parameter for category)
 router.get("/", async (req, res) => {
   try {
-    const articles = await ArticleModel.find().populate("author", "username"); // Populate author name
+    let query = {};
+    if (req.query.category) {
+      query.category = req.query.category.toLowerCase(); // Make category lowercase for case-insensitive matching
+    }
+
+    const articles = await ArticleModel.find(query).populate(
+      "author",
+      "username"
+    );
     res.json(articles);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
 // GET a specific article
 router.get("/:id", getArticle, (req, res) => {
   res.json(res.article);
