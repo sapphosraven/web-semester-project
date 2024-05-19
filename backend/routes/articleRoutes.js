@@ -7,9 +7,10 @@ const mongoose = require("mongoose");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// GET all articles (optional query parameter for category)
+// GET all articles (no filtering)
 router.get("/", async (req, res) => {
   try {
+    const articles = await ArticleModel.find().populate("author", "username");
     res.json(articles);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -30,8 +31,9 @@ router.get("/:category", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 // GET a specific article
-router.get("/:id", getArticle, (req, res) => {
+router.get("/article/:id", getArticle, (req, res) => {
   res.json(res.article);
 });
 
@@ -120,15 +122,25 @@ router.delete("/:id", getArticle, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Middleware to get an article by ID
 async function getArticle(req, res, next) {
+  let article;
   try {
-    const article = await ArticleModel.findById(req.params.id).populate(
-      "author",
-      "username"
-    );
-    if (article == null) {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      // If req.params.id is a valid ObjectId, use findById
+      article = await ArticleModel.findById(req.params.id).populate(
+        "author",
+        "username"
+      );
+    } else {
+      // If req.params.id is not a valid ObjectId, assume it's a category
+      article = await ArticleModel.find({
+        category: req.params.id.toLowerCase(),
+      }).populate("author", "username");
+      // If we got multiple articles, we'll only return the first one
+      if (article.length > 0) article = article[0];
+    }
+
+    if (!article) {
       return res.status(404).json({ message: "Cannot find article" });
     }
     res.article = article;
