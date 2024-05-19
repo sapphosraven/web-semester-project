@@ -10,6 +10,7 @@ import TopNavbar from "./components/TopNavbar";
 import Footer from "./components/BFooter";
 import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/users/signup" element ={<SignUpPage />} /> 
           <Route path="/users/login" element={<LoginPage/>} /> 
           <Route path="/articles/:id" element={<ArticlePage />} />
+          <Route path="/users/${userId}" element={<ProfilePage />} />
 
         </Routes>
         <Footer />
