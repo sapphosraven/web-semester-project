@@ -10,15 +10,7 @@ const upload = multer({ storage: storage });
 // GET all articles (optional query parameter for category)
 router.get("/", async (req, res) => {
   try {
-    let query = {};
-    if (req.query.category) {
-      query.category = req.query.category.toLowerCase(); // Make category lowercase for case-insensitive matching
-    }
-
-    const articles = await ArticleModel.find(query).populate(
-      "author",
-      "username"
-    );
+    const articles = await ArticleModel.find().populate("author", "username"); // Populate author name
     res.json(articles);
   } catch (err) {
     res.status(500).json({ message: err.message });
