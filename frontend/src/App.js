@@ -14,19 +14,16 @@ import LoginPage from "./components/LoginPage";
 function App() {
   return (
     <div className="App">
-
       <Router>
         <TopNavbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="users/signup" component={SignUpPage} /> 
-          <Route path="users/signup" component={LoginPage} /> 
-          <Route path="/articles/:id" element={<ArticlePage />} />
-
+          <Route path="users/signup" component={SignUpPage} />
+          <Route path="users/signup" component={LoginPage} />
+          <Route path="/articles" element={<ArticlePage />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </Router>
-
     </div>
   );
 }
