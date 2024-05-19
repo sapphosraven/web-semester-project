@@ -68,7 +68,7 @@ function ArticlePage() {
       );
 
       // Check if we should insert an image after this paragraph
-      if (index > 0 && imageElements[index] && Math.random() < 0.5) {
+      if (index > 0 && imageElements[index] && Math.random() < 0.35) {
         acc.push(imageElements[index]);
       }
       return acc;
