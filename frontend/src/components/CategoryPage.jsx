@@ -5,7 +5,6 @@ import { Container, Row, Col, Badge } from "react-bootstrap";
 import ArticleCard from "./ArticleCard";
 import SideBar from "./SideBar";
 import "../global.css";
-import "./CategoryPage.css"; // Create this CSS file (we'll add styles later)
 
 function CategoryPage() {
   const { category } = useParams();
@@ -18,7 +17,7 @@ function CategoryPage() {
   useEffect(() => {
     // Fetch articles by category from your backend API
     axios
-      .get(`/articles?category=${category}`)
+      .get(`/articles/${category}`)
       .then((response) => {
         setArticles(response.data);
         setIsLoading(false);
