@@ -19,8 +19,8 @@ function App() {
         <TopNavbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="users/signup" component={SignUpPage} /> 
-          <Route path="users/signup" component={LoginPage} /> 
+          <Route path="/signup" element ={<SignUpPage />} /> 
+          <Route path="/login" element={<LoginPage/>} /> 
           <Route path="/articles/:id" element={<ArticlePage />} />
 
         </Routes>
