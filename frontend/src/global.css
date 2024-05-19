@@ -1,136 +1,212 @@
 /* Import Montserrat font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-*{
-    text-align: center;
+* {
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
 }
 
-.App{
-    background-color: #15061e;
-}
-
-*{
-    font-family: 'Montserrat', sans-serif;
+.App {
+  background-color: #15061e;
 }
 
 /* Base Styles */
 body {
-    background-color: #121212; /* Dark background */
-    color: #FFFFFF;            /* White text */
-    margin: 0;
-    padding: 0;
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* White text */
+  margin: 0;
+  padding: 0;
 }
 
-
 /* Typography */
-h1 { font-weight: 900; }  /* Black (Extra Bold) */
-h2 { font-weight: 800; }  /* Extra Bold */
-h3 { font-weight: 700; }  /* Bold */
-h4 { font-weight: 600; }  /* Semi Bold */
-h5 { font-weight: 500; }  /* Medium */
-h6, strong { font-weight: 400; }  /* Regular */ 
-p, span {
-    font-weight: 300;   /* Light */
-    line-height: 1.6;  /* Improved readability */
+h1 {
+  font-weight: 900;
+} /* Black (Extra Bold) */
+h2 {
+  font-weight: 800;
+} /* Extra Bold */
+h3 {
+  font-weight: 700;
+} /* Bold */
+h4 {
+  font-weight: 600;
+} /* Semi Bold */
+h5 {
+  font-weight: 500;
+} /* Medium */
+h6,
+strong {
+  font-weight: 400;
+} /* Regular */
+p,
+span {
+  font-weight: 300; /* Light */
+  line-height: 1.6; /* Improved readability */
 }
 
 /* Links */
 a {
-    color: #9370DB;     /* Medium Purple */
-    text-decoration: none;
+  color: #9370db; /* Medium Purple */
+  text-decoration: none;
 }
 
 a:hover {
-    color: #8B008B;     /* Dark Purple */
+  color: #8b008b; /* Dark Purple */
 }
 
-.container{
-    padding: 20px;
+.container {
+  padding: 20px;
+}
+
+.position-sticky .container {
+  padding-top: 0px;
+}
+
+.social-link {
+  color: white;
+  margin-bottom: 0.5rem; /* Add some spacing between links */
+  padding: 1rem;
+  display: flex;
+  align-items: center; /* Vertically align the icon and text */
+  justify-content: center;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: #ed5bed; /* Optional: Darker purple on hover */
+  text-decoration: none;
+}
+
+.social-link svg {
+  margin-right: 0.5rem; /* Add space between icon and text */
+}
+
+.position-sticky > .container > .p-4 {
+  padding-top: 0px !important; /* Override Bootstrap's padding */
+  padding-left: 0.5rem !important; /* Override Bootstrap's padding */
+}
+
+.position-sticky {
+  position: sticky; /* Use sticky positioning */
+  top: 0px; /* Adjust the offset from the top as needed (e.g., to account for the navbar height) */
+  height: calc(
+    100vh
+  ); /* Set the height to 100% of viewport height minus the offset */
+  overflow-y: auto; /* Enable scrolling within the sidebar if the content is too long */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* Sidebar */
+.sidebar-col {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0rem;
+}
+
+/* Horizontal Line */
+.horizontal-line {
+  height: 2px;
+  background-color: #9370db;
+  margin-bottom: 1rem;
 }
 
 /* Buttons */
 .btn-primary {
-    background-color: #9370DB;  /* Medium Purple */
-    border-color: #9370DB;
-    font-weight: 500;
+  background-color: #9370db !important; /* Medium Purple */
+  border-color: #9370db !important;
+  font-weight: 500;
 }
 
 .btn-primary:hover {
-    background-color: #8B008B;  /* Dark Purple */
-    border-color: #8B008B;
+  background-color: #8b008b !important; /* Dark Purple */
+  border-color: #8b008b !important;
 }
+
 /* Article Card Styling */
 .card {
-    border-radius: 15px;      /* More rounded corners */
-    overflow: hidden;         /* Hide image overflow for clean edges */
-    transition: transform 0.2s ease; /* Smooth transition for hover effect */
+  border-radius: 15px; /* More rounded corners */
+  overflow: hidden; /* Hide image overflow for clean edges */
+  transition: transform 0.2s ease; /* Smooth transition for hover effect */
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+}
+
+.card:hover .card-body {
+  background-color: #7c440b;
+}
+
+.card:hover .card-title {
+  color: #e0d2c4;
+}
+
+.card:hover .card-text {
+  color: #e0d2c4;
 }
 
 .card-img-top {
-    object-fit: cover;      /* Cover the entire container, maintaining aspect ratio */
-    height: 200px;         /* Set a fixed height for the image */
+  object-fit: cover; /* Cover the entire container, maintaining aspect ratio */
+  height: 200px; /* Set a fixed height for the image */
 }
 
 .card-body {
-    border-width: 0px;
-    background-color: #3a2109;
-    padding: 1.5rem;        /* Increased padding for better spacing */
+  border-width: 0px;
+  background-color: #e0d2c4;
+  padding: 1.5rem; /* Increased padding for better spacing */
 }
 
-.card-title {
-    font-weight: 600;     /* Slightly bolder title */
-    margin-bottom: 0.75rem; /* Adjust spacing below title */
+.card .card-title {
+  color: #7c440b;
 }
 
 .card-text {
-    font-size: 0.9rem;    /* Slightly smaller font for the excerpt */
+  color: #7c440b;
+  font-size: 0.9rem; /* Slightly smaller font for the excerpt */
 }
 
 .card-body .btn-block {
-    color: white;
-    background-color: orange;
-    border-color: orange;
+  color: white;
+  background-color: orange;
+  border-color: orange;
 }
 
 .card-body .btn-block:hover {
-    background-color: darkorange; /* Darker orange on hover */
-    border-color: darkorange;
+  background-color: rgb(188, 105, 3); /* Darker orange on hover */
+  border-color: rgb(186, 103, 1);
 }
 
 /* Other Elements */
-input, textarea, select {
-    background-color: #282828;
-    color: #FFFFFF;
-    border: 1px solid #555555;
-    border-radius: 5px;
+input,
+textarea,
+select {
+  background-color: #282828;
+  color: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 5px;
 }
 
 .custom-navbar {
-    background-color: #26093a; /* Dark gray background */
-  }
-  
-  .custom-navbar .navbar-nav .nav-link {
-    color: #9370db; /* Purple for links */
-  }
-  
-  .custom-navbar .navbar-nav .nav-link:hover,
-  .custom-navbar .navbar-nav .nav-link:focus {
-    color: #6f42c1; /* Darker purple on hover */
-  }
+  background-color: #26093a; /* Dark gray background */
+}
 
-  .brand-text {
-    color: white;
- 
+.custom-navbar .navbar-nav .nav-link {
+  color: #9370db; /* Purple for links */
+}
+
+.custom-navbar .navbar-nav .nav-link:hover,
+.custom-navbar .navbar-nav .nav-link:focus {
+  color: #6f42c1; /* Darker purple on hover */
+}
+
+.brand-text {
+  color: white;
 }
 
 .navbar-toggler {
-    border-color: #ffffff; /* White border */
+  border-color: #ffffff; /* White border */
 }
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* White icon */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* White icon */
 }

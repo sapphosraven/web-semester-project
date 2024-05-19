@@ -11,3 +11,7 @@ In frontend directory:
 npm install axios react-router-dom
 npm install react-bootstrap bootstrap
 npm install buffer
+npm install --save @fortawesome/fontawesome-svg-core
+npm install --save @fortawesome/free-brands-svg-icons
+npm install --save @fortawesome/react-fontawesome
+npm install --save @fortawesome/free-solid-svg-icons

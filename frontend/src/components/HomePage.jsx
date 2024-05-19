@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap"; // Import Bootstrap components
-import ArticleCard from "./ArticleCard"; // Import your ArticleCard component
+import ArticleCard from "./ArticleCard"; // Import ArticleCard component
+import SideBar from "./SideBar"; // Import SideBar component
 import "../global.css";
 
 function HomePage() {
@@ -9,7 +10,7 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
   const articlesToDisplay = articles.slice(0, 9); // Display only the first 10 articles
-  
+
   useEffect(() => {
     // Fetch latest articles from your backend API
     axios
@@ -26,7 +27,7 @@ function HomePage() {
   }, []); // Empty dependency array ensures this runs only once on mount
 
   if (isLoading) {
-    return <div style={({ color: 'white' })}>Loading...</div>; // Show loading message while fetching data
+    return <div style={{ color: "white" }}>Loading...</div>; // Show loading message while fetching data
   }
 
   if (error) {
@@ -34,20 +35,25 @@ function HomePage() {
   }
 
   return (
-    <Container className="text-white">
+    <Container className="text-white position-relative" fluid>
       {" "}
-      {/* Add text-white class */}
-      <h1 className="text-center mb-4 display-4">
-        Welcome to Motorsport News
-      </h1>{" "}
-      {/* Change h1 to display-4 class */}
-
-      <Row xs={1} md={3} className="g-4">
-        {articlesToDisplay.map((article) => (
-          <Col key={article._id}>
-            <ArticleCard article={article} />
-          </Col>
-        ))}
+      {/* Use fluid container */}
+      <Row>
+        <Col md={8} className="mb-4">
+          {/* Modified Heading */}
+          <h2 className="text-start mb-2">Recent Articles</h2>
+          <hr className="horizontal-line"></hr>
+          <Row xs={1} md={3} className="g-4">
+            {articlesToDisplay.map((article) => (
+              <Col key={article._id}>
+                <ArticleCard article={article} />
+              </Col>
+            ))}
+          </Row>
+        </Col>
+        <Col md={4} className="sidebar-col">
+          <SideBar />
+        </Col>
       </Row>
     </Container>
   );
