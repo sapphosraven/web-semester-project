@@ -106,6 +106,7 @@ function ArticlePage() {
       </Container>
     );
   } else {
+    // Handle the case where article is not found or doesn't have content
     return (
       <div style={{ color: "white" }}>
         Article not found or content is missing.
