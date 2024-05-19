@@ -48,7 +48,8 @@ function SignUpPage() {
           {error && <Alert variant="danger">{error}</Alert>}
           {success && (
             <Alert variant="success">
-              Sign up successful! Redirecting to <a href="/users/login">log in</a> page...
+              Sign up successful! Redirecting to{" "}
+              <a href="/users/login">log in</a> page...
             </Alert>
           )}
           {!success && (
@@ -97,7 +98,7 @@ function SignUpPage() {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button type="submit" classname="btn btn-primary">
                 Sign Up
               </Button>
             </Form>
