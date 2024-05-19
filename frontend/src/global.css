@@ -1,14 +1,26 @@
 /* Import Montserrat font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+*{
+    text-align: center;
+}
+
+.App{
+    background-color: #15061e;
+}
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* Base Styles */
 body {
-    font-family: 'Montserrat', sans-serif;
     background-color: #121212; /* Dark background */
     color: #FFFFFF;            /* White text */
     margin: 0;
     padding: 0;
 }
+
 
 /* Typography */
 h1 { font-weight: 900; }  /* Black (Extra Bold) */
@@ -32,6 +44,10 @@ a:hover {
     color: #8B008B;     /* Dark Purple */
 }
 
+.container{
+    padding: 20px;
+}
+
 /* Buttons */
 .btn-primary {
     background-color: #9370DB;  /* Medium Purple */
@@ -43,17 +59,47 @@ a:hover {
     background-color: #8B008B;  /* Dark Purple */
     border-color: #8B008B;
 }
-
-/* Cards (For articles, quizzes, etc.) */
+/* Article Card Styling */
 .card {
-    background-color: #1E1E1E; /* Slightly lighter dark background for contrast */
-    border: none;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+    border-radius: 15px;      /* More rounded corners */
+    overflow: hidden;         /* Hide image overflow for clean edges */
+    transition: transform 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+}
+
+.card-img-top {
+    object-fit: cover;      /* Cover the entire container, maintaining aspect ratio */
+    height: 200px;         /* Set a fixed height for the image */
+}
+
+.card-body {
+    border-width: 0px;
+    background-color: #3a2109;
+    padding: 1.5rem;        /* Increased padding for better spacing */
 }
 
 .card-title {
-    font-weight: 600;
+    font-weight: 600;     /* Slightly bolder title */
+    margin-bottom: 0.75rem; /* Adjust spacing below title */
+}
+
+.card-text {
+    font-size: 0.9rem;    /* Slightly smaller font for the excerpt */
+}
+
+.card-body .btn-block {
+    color: white;
+    background-color: orange;
+    border-color: orange;
+}
+
+.card-body .btn-block:hover {
+    background-color: darkorange; /* Darker orange on hover */
+    border-color: darkorange;
 }
 
 /* Other Elements */
@@ -79,4 +125,12 @@ input, textarea, select {
 
   .brand-text {
     color: white;
+ 
+}
+
+.navbar-toggler {
+    border-color: #ffffff; /* White border */
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* White icon */
 }

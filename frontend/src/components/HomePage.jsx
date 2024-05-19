@@ -8,7 +8,8 @@ function HomePage() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
-
+  const articlesToDisplay = articles.slice(0, 9); // Display only the first 10 articles
+  
   useEffect(() => {
     // Fetch latest articles from your backend API
     axios
@@ -25,7 +26,7 @@ function HomePage() {
   }, []); // Empty dependency array ensures this runs only once on mount
 
   if (isLoading) {
-    return <div>Loading...</div>; // Show loading message while fetching data
+    return <div style={({ color: 'white' })}>Loading...</div>; // Show loading message while fetching data
   }
 
   if (error) {
@@ -33,12 +34,16 @@ function HomePage() {
   }
 
   return (
-    <Container>
-      <h1 className="text-center mb-4">Welcome to Motorsport News</h1>
+    <Container className="text-white">
+      {" "}
+      {/* Add text-white class */}
+      <h1 className="text-center mb-4 display-4">
+        Welcome to Motorsport News
+      </h1>{" "}
+      {/* Change h1 to display-4 class */}
+
       <Row xs={1} md={3} className="g-4">
-        {" "}
-        {/* Grid layout for articles */}
-        {articles.map((article) => (
+        {articlesToDisplay.map((article) => (
           <Col key={article._id}>
             <ArticleCard article={article} />
           </Col>

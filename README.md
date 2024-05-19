@@ -10,3 +10,4 @@ In frontend directory:
 
 npm install axios react-router-dom
 npm install react-bootstrap bootstrap
+npm install buffer
