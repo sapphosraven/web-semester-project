@@ -15,6 +15,8 @@ function App() {
       <TopNavbar />
       <Routes>
         <Route path="/" element={<HomePage />} /> 
+        <Route path="/signup" component={SignUpPage} />
+        <Route path="/login" component={LoginPage} />
       </Routes>
       <Footer />
     </Router>
