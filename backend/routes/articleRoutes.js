@@ -6,11 +6,17 @@ const mongoose = require("mongoose");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 // GET all articles (optional query parameter for category)
 router.get("/", async (req, res) => {
   try {
-    const articles = await ArticleModel.find().populate("author", "username"); // Populate author name
+    let query = {};
+    if (req.query.category) {
+      query.category = req.query.category.toLowerCase(); // Make category lowercase for case-insensitive matching
+    }
+    const articles = await ArticleModel.find(query).populate(
+      "author",
+      "username"
+    );
     res.json(articles);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -107,13 +113,45 @@ router.delete("/:id", getArticle, async (req, res) => {
   }
 });
 
-// Middleware to get an article by ID
-async function getArticle(req, res, next) {
+// GET all articles of a specific category
+router.get("/category/:category", async (req, res) => {
   try {
-    const article = await ArticleModel.findById(req.params.id).populate(
+    console.log("Received category:", req.params.category);
+    const category = req.params.category.toUpperCase();
+
+    const articles = await ArticleModel.find({ category }).populate(
       "author",
       "username"
     );
+    if (!articles) {
+      return res
+        .status(404)
+        .json({ message: "No articles found for this category" });
+    }
+    res.json(articles);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET a specific article
+router.get("/article/:id", getArticle, (req, res) => {
+  res.json(res.article);
+});
+// Middleware to get an article by ID
+async function getArticle(req, res, next) {
+  let article;
+  try {
+    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      // Check if ID is a valid ObjectId (24 hex characters)
+      article = await ArticleModel.findById(req.params.id).populate(
+        "author",
+        "username"
+      );
+    } else {
+      return res.status(404).json({ message: "Cannot find article" });
+    }
+
     if (article == null) {
       return res.status(404).json({ message: "Cannot find article" });
     }
@@ -123,5 +161,4 @@ async function getArticle(req, res, next) {
     return res.status(500).json({ message: err.message });
   }
 }
-
 module.exports = router;

@@ -140,7 +140,6 @@ router.delete("/:id", getUser, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 // LOGIN route
 router.post("/login", async (req, res) => {
   try {
@@ -165,8 +164,21 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    res.cookie("token", token, { httpOnly: true });
-    res.json({ message: "Logged in successfully", token });
+    // Set both token AND userId in cookies
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+      path: "/",
+    });
+    res.cookie("userId", user._id, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+      path: "/",
+    });
+
+    res.json({ message: "Logged in successfully", token, userId: user._id });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -229,7 +241,7 @@ router.post("/signup", upload.single("profileImage"), async (req, res) => {
 });
 
 // LOGOUT route
-router.post("/logout", (req, res) => {
+router.post("/user/logout", (req, res) => {
   // Clear the token cookie
   res.clearCookie("token", { httpOnly: true });
   res.sendStatus(200); // OK (or send a JSON response if you prefer)

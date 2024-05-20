@@ -24,7 +24,7 @@ function SignUpPage() {
     }
 
     axios
-      .post("/signup", { username, email, password })
+      .post("/users/signup", { username, email, password })
       .then((response) => {
         setSuccess(true);
         setUsername();
@@ -32,7 +32,7 @@ function SignUpPage() {
         setPassword();
         setConfirmPassword();
         setTimeout(() => {
-          navigate("/login"); // Redirect to login page after 2 seconds
+          navigate("/users/login"); // Redirect to login page after 2 seconds
         }, 2000);
       })
       .catch((error) => {
@@ -41,14 +41,15 @@ function SignUpPage() {
   };
 
   return (
-    <Container className="text-white position-relative h-100" fluid>
-      <Row className="justify-content-md-center h-100">
+    <Container className="text-white position-relative" style={{ minHeight: 'calc(100vh - 185px)' }} fluid>
+      <Row className="justify-content-md-center">
         <Col md={6}>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {success && (
             <Alert variant="success">
-              Sign up successful! Redirecting to <a href="/login">log in</a> page...
+              Sign up successful! Redirecting to{" "}
+              <a href="/users/login">log in</a> page...
             </Alert>
           )}
           {!success && (
@@ -97,7 +98,7 @@ function SignUpPage() {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="w-100">
+              <Button type="submit" classname="btn btn-primary">
                 Sign Up
               </Button>
             </Form>

@@ -16,8 +16,12 @@ body {
   color: #ffffff; /* White text */
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
+main {
+  flex: 1;
+}
 /* Typography */
 h1 {
   font-weight: 900;
@@ -215,7 +219,6 @@ select {
   background-color: #26093a; /* Dark gray background */
   color: whitesmoke; /* Purple for text */
   padding: 20px 0; /* Add some padding */
-
 }
 
 .footer .container {
