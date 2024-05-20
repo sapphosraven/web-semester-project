@@ -50,7 +50,7 @@ function TopNavbar() {
             className="d-inline-block align-left"
             alt="Motorsport News Logo"
           />{" "}
-          <span className="brand-text">Motorsport</span>
+          <span className="brand-text">12C Motorsport</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
