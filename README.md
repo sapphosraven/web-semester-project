@@ -1,4 +1,3 @@
-````markdown
 # Motorsport News Website 🏎️🏁
 
 Welcome to the Motorsport News website! This is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to deliver the latest motorsport news, quizzes, and merchandise to passionate fans around the world.
