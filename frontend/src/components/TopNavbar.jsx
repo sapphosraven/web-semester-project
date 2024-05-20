@@ -1,10 +1,9 @@
-import React, { useState, useLayoutEffect } from "react";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import React, { useState, useLayoutEffect, useContext} from "react";
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/logo.png"; // Import your logo image
 import "../global.css";
-import Cookies from "universal-cookie"; // Import the universal-cookie library
-const jwt_decode = require("jwt-decode"); // Correct import
+import { UserContext } from '../context/UserContext';
 
 const categories = [
   "F1",
@@ -18,37 +17,7 @@ const categories = [
 ];
 
 function TopNavbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-  const [userId, setUserId] = useState(null);
-  const [tokenSet, setTokenSet] = useState(false);
-
-  useLayoutEffect(() => {
-    if (tokenSet) {
-      const cookies = new Cookies();
-      const token = cookies.get("token");
-      if (token) {
-        console.log("a");
-        try {
-          const decodedToken = jwt_decode(token);
-          setUserId(decodedToken.userId);
-          setIsLoggedIn(true);
-        } catch (error) {
-          console.error("Invalid token:", error);
-          cookies.remove("token");
-          setIsLoggedIn(false);
-        }
-      }
-    }
-  }, [tokenSet]);
-
-  const handleLogout = () => {
-    const cookies = new Cookies();
-    cookies.remove("token");
-    cookies.remove("userId"); // Remove userId cookie as well
-    setIsLoggedIn(false);
-    navigate("/");
-  };
+  const { user, logout } = useContext(UserContext);
 
   return (
     <Navbar expand="lg" className="mb-4 custom-navbar">
@@ -68,9 +37,6 @@ function TopNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/shopItems">
-              ShopItems
-            </Nav.Link>
             {categories.map((category) => (
               <Nav.Link
                 as={Link}
@@ -80,17 +46,20 @@ function TopNavbar() {
                 {category}
               </Nav.Link>
             ))}
+            <Nav.Link as={Link} to="/shopItems">
+              Merch Shop
+            </Nav.Link>
           </Nav>
           <Nav>
-            {isLoggedIn ? (
+            {user ? (
               <>
-                <Button as={Link} to="/cart" variant="outline-primary" className="me-2">
-                Cart
-              </Button>
-                <Nav.Link as={Link} to={`/users/${userId}`}>
+                <Nav.Link as={Link} to={`/cart`}>
+                  Cart
+                </Nav.Link>
+                <Nav.Link as={Link} to={`/user/${user._id}`}>
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={handleLogout}>Log Out</Nav.Link>
+                <Nav.Link onClick={logout}>Log Out</Nav.Link>
               </>
             ) : (
               <>

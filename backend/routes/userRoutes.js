@@ -169,16 +169,16 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: true,
       maxAge: 3600000,
-      path: '/'
+      path: "/",
     });
     res.cookie("userId", user._id, {
       httpOnly: true,
       secure: true,
       maxAge: 3600000,
-      path: '/'
-    }); // Add this line
+      path: "/",
+    });
 
-    res.json({ message: "Logged in successfully", token, userId: user._id }); // This is still needed in the response
+    res.json({ message: "Logged in successfully", token, userId: user._id });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

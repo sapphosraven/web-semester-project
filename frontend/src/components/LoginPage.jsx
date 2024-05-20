@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
-import Cookies from "universal-cookie"; // Import the universal-cookie library
+import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+import { UserContext } from "../context/UserContext";
 import "../global.css";
 
 function LoginPage() {
@@ -10,32 +11,33 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/users/login", {
-        username,
-        password,
-      });
+      const response = await axios.post("/users/login", { username, password });
 
       if (response.data.token) {
-        console.log("login sucessfull");
+        console.log("login successful");
 
-        // Set cookies and update tokenSet state:
         const cookies = new Cookies();
         cookies.set("token", response.data.token, { path: "/" });
+
+        const userData = { _id: response.data.userId, username };
         cookies.set("userId", response.data.userId, { path: "/" });
 
-        // Delay before redirecting
+        login(userData);
+
         setTimeout(() => {
-          navigate("/"); // Redirect after a delay
+          navigate("/");
         }, 200);
       } else {
         setError("Invalid username or password");
       }
     } catch (error) {
       console.log(error);
+      setError("An error occurred. Please try again.");
     }
   };
 

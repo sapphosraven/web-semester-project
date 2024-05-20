@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { UserContext } from "../UserContext"; // Assuming you have UserContext
+import axiosInstance from "../axiosInstance"; // Assuming you have axios instance
 import "../global.css";
 
 function ProfilePage() {
   const { userId } = useParams();
   const navigate = useNavigate();
+  const { user: currentUser } = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    oldPassword: '',
-    newPassword: '',
+    username: "",
+    email: "",
+    oldPassword: "",
+    newPassword: "",
   });
 
   useEffect(() => {
-    axios
+    axiosInstance
       .get(`/users/${userId}`)
       .then((response) => {
         setUser(response.data);
         setFormData({
           username: response.data.username,
           email: response.data.email,
-          oldPassword: '',
-          newPassword: '',
+          oldPassword: "",
+          newPassword: "",
         });
         setIsLoading(false);
       })
@@ -41,32 +44,33 @@ function ProfilePage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleUpdate = () => {
-    axios
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    axiosInstance
       .patch(`/users/${userId}`, {
         username: formData.username,
         email: formData.email,
-        password: formData.newPassword ? formData.newPassword : undefined,
+        password: formData.newPassword || undefined,
         oldPassword: formData.oldPassword,
       })
       .then((response) => {
         setUser(response.data);
-        alert('Profile updated successfully');
+        alert("Profile updated successfully");
       })
       .catch((error) => {
-        alert('Error updating profile: ' + error.message);
+        alert("Error updating profile: " + error.message);
       });
   };
 
   const handleDelete = () => {
-    axios
+    axiosInstance
       .delete(`/users/${userId}`)
       .then(() => {
-        alert('Account deleted successfully');
-        navigate('/');
+        alert("Account deleted successfully");
+        navigate("/");
       })
       .catch((error) => {
-        alert('Error deleting account: ' + error.message);
+        alert("Error deleting account: " + error.message);
       });
   };
 
@@ -74,9 +78,9 @@ function ProfilePage() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Container>
+    <Container className="profile-page">
       <h2>Profile Page</h2>
-      <Form>
+      <Form onSubmit={handleUpdate}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -84,6 +88,7 @@ function ProfilePage() {
             name="username"
             value={formData.username}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -94,6 +99,7 @@ function ProfilePage() {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -117,7 +123,7 @@ function ProfilePage() {
           />
         </Form.Group>
 
-        <Button variant="primary" onClick={handleUpdate}>
+        <Button variant="primary" type="submit">
           Update Profile
         </Button>
         <Button variant="danger" onClick={handleDelete} className="ml-2">
@@ -125,19 +131,33 @@ function ProfilePage() {
         </Button>
       </Form>
 
-      {user.role === 'admin' && (
-        <div>
+      {user?.role === "admin" && (
+        <div className="admin-options">
           <h3>Admin Options</h3>
           <Row>
             <Col>
               <h4>Manage Articles</h4>
-              <Button variant="success" onClick={() => navigate('/articles/create')}>Create Article</Button>
-              <Button variant="info" onClick={() => navigate('/articles')}>View Articles</Button>
+              <Button
+                variant="success"
+                onClick={() => navigate("/articles/create")}
+              >
+                Create Article
+              </Button>
+              <Button variant="info" onClick={() => navigate("/articles")}>
+                View Articles
+              </Button>
             </Col>
             <Col>
               <h4>Manage Shop Items</h4>
-              <Button variant="success" onClick={() => navigate('/shopitems/create')}>Create Shop Item</Button>
-              <Button variant="info" onClick={() => navigate('/shopitems')}>View Shop Items</Button>
+              <Button
+                variant="success"
+                onClick={() => navigate("/shopitems/create")}
+              >
+                Create Shop Item
+              </Button>
+              <Button variant="info" onClick={() => navigate("/shopitems")}>
+                View Shop Items
+              </Button>
             </Col>
           </Row>
         </div>
