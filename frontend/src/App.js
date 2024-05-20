@@ -14,7 +14,6 @@ import ProfilePage from "./components/ProfilePage";
 import MerchPage from "./components/MerchPage";
 import ShopItemPage from "./components/ItemPage";
 import CartPage from "./components/CartPage";
-import { AuthProvider } from "./AuthContext"; // Import your context
 
 function App() {
   return (
@@ -22,34 +21,24 @@ function App() {
       <Router>
         <TopNavbar />
         <Routes>
-          <AuthProvider>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/users/signup" element={<SignUpPage />} />
-            <Route path="/users/login" element={<LoginPage />} />
-            <Route path="/articles/:id" element={<ArticlePage />} />
-            <Route
-              path="/articles/category/:category"
-              element={<CategoryPage />}
-            />
-            <Route path="/users/${userId}" element={<ProfilePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/users/signup" element={<SignUpPage />} />
+          <Route path="/users/login" element={<LoginPage />} />
+          <Route path="/articles/:id" element={<ArticlePage />} />
+          <Route
+            path="/articles/category/:category"
+            element={<CategoryPage />}
+          />
+          <Route path="/users/${userId}" element={<ProfilePage />} />
 
-            <Route path="/shopItems" element={<MerchPage />} />
-            <Route path="/shopItems/:id" element={<ShopItemPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/users/signup" element={<SignUpPage />} />
-            <Route path="/users/login" element={<LoginPage />} />
-            <Route path="/articles/:id" element={<ArticlePage />} />
-            <Route
-              path="/articles/category/:category"
-              element={<CategoryPage />}
-            />
-            <Route path="/users/${userId}" element={<ProfilePage />} />
-          </AuthProvider>
+          <Route path="/shopItems" element={<MerchPage/>} />
+          <Route path="/shopItems/:id" element={<ShopItemPage/>} />
+          <Route path="/cart" element={<CartPage/>} />
         </Routes>
         <Footer />
       </Router>
     </div>
   );
 }
+
 export default App;
