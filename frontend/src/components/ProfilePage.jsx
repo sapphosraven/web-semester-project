@@ -2,12 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { UserContext } from "../UserContext"; // Assuming you have UserContext
-import axiosInstance from "../axiosInstance"; // Assuming you have axios instance
+import { UserContext } from "../context/UserContext"; // Assuming you have UserContext
 import "../global.css";
 
 function ProfilePage() {
-  const { userId } = useParams();
   const navigate = useNavigate();
   const { user: currentUser } = useContext(UserContext);
   const [user, setUser] = useState(null);
@@ -21,8 +19,8 @@ function ProfilePage() {
   });
 
   useEffect(() => {
-    axiosInstance
-      .get(`/users/${userId}`)
+    axios
+      .get(`/users/${currentUser._id}`)
       .then((response) => {
         setUser(response.data);
         setFormData({
@@ -37,7 +35,7 @@ function ProfilePage() {
         setError(error.message);
         setIsLoading(false);
       });
-  }, [userId]);
+  }, [currentUser._id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,8 +44,8 @@ function ProfilePage() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    axiosInstance
-      .patch(`/users/${userId}`, {
+    axios
+      .patch(`/users/${currentUser._id}`, {
         username: formData.username,
         email: formData.email,
         password: formData.newPassword || undefined,
@@ -63,8 +61,8 @@ function ProfilePage() {
   };
 
   const handleDelete = () => {
-    axiosInstance
-      .delete(`/users/${userId}`)
+    axios
+      .delete(`/users/${currentUser._id}`)
       .then(() => {
         alert("Account deleted successfully");
         navigate("/");

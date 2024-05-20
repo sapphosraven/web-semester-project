@@ -56,7 +56,7 @@ function TopNavbar() {
                 <Nav.Link as={Link} to={`/cart`}>
                   Cart
                 </Nav.Link>
-                <Nav.Link as={Link} to={`/user/${user._id}`}>
+                <Nav.Link as={Link} to={`/users/${user._id}`}>
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={logout}>Log Out</Nav.Link>
