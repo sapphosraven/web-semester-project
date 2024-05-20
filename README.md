@@ -7,9 +7,9 @@ Welcome to the Motorsport News website! This is a full-stack MERN (MongoDB, Expr
 
 - **Recent Articles**: Stay up-to-date with the latest news from F1, MotoGP, NASCAR, IndyCar, and other top motorsport series.
 - **Category Pages**: Easily browse articles by your favorite category.
-- **Interactive Quizzes (Coming Soon)**: Test your motorsport knowledge with engaging quizzes.
 - **Merch Shop**: Show your support for your favorite teams and drivers with exclusive merchandise.
 - **User Authentication**: Sign up, log in, and manage your profile.
+- **Interactive Quizzes (Coming Soon)**: Test your motorsport knowledge with engaging quizzes.
 - **Admin Dashboard (Coming Soon)**: Manage articles, quizzes, and shop items.
 
 ## Tech Stack 🚀
@@ -24,9 +24,9 @@ Welcome to the Motorsport News website! This is a full-stack MERN (MongoDB, Expr
 
 ### Clone the Repository:
 
-\```bash
+```bash
 git clone [invalid URL removed]
-\```
+```
 
 ### Install Dependencies:
 
@@ -36,45 +36,51 @@ Run `npm install` in the root directory, then in the backend directory, and last
 
 #### Backend (.env)
 
-Create a `.env` file in the backend directory.
+Edit the `.env` file in the backend directory.
 Add your MongoDB connection URI:
-\```env
+
+```env
 MONGODB_URI=your_mongodb_connection_string
-\```
+```
+
 Set a strong JWT secret:
-\```env
+
+```env
 JWT_SECRET=your_jwt_secret_key
-\```
+```
+
 You can optionally define other environment variables like your email service credentials for password reset.
 
 #### Frontend (.env.local):
 
 Create a `.env.local` file in the frontend directory.
 Add the backend URL (optional, but useful for development if your backend runs on a different port):
-\```env
+
+```env
 REACT_APP_BACKEND_URL=http://localhost:5000
-\```
-
-### Seed the Database:
-
-From the backend directory:
-\```bash
-node seed.js
-\```
+```
 
 ### Start the Servers:
 
 #### Backend:
 
-\```bash
-nodemon server.js
-\```
+```bash
+node server.js
+```
+
+### Seed the Database:
+
+from the backend directory:
+
+```bash
+node seed.js
+```
 
 #### Frontend:
 
-\```bash
+```bash
 npm start
-\```
+```
 
 ### Open in Browser:
 
