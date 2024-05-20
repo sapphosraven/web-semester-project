@@ -18,6 +18,24 @@ const categories = [
 
 function TopNavbar() {
   const { user, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      // 1. Initiate Logout (Clear Local Storage and Redirect)
+      localStorage.removeItem("user");
+      navigate("/");
+
+      // 2. Wait for Navigation to Complete
+      await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 500ms (adjust as needed)
+
+      // 3. Update Context State
+      logout(); // Call the logout function from the context
+    } catch (error) {
+      // Handle any potential errors during logout or navigation
+      console.error("Error during logout:", error);
+    }
+  };
 
   return (
     <Navbar expand="lg" className="mb-4 custom-navbar">
@@ -59,7 +77,7 @@ function TopNavbar() {
                 <Nav.Link as={Link} to={`/users/${user._id}`}>
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={logout}>Log Out</Nav.Link>
+                <Nav.Link onClick={handleLogout}>Log Out</Nav.Link>
               </>
             ) : (
               <>

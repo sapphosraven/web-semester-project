@@ -7,7 +7,7 @@ import "../global.css";
 
 function ProfilePage() {
   const navigate = useNavigate();
-  const { user: currentUser } = useContext(UserContext);
+  const { user: currentUser, logout } = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -60,16 +60,21 @@ function ProfilePage() {
       });
   };
 
-  const handleDelete = () => {
-    axios
-      .delete(`/users/${currentUser._id}`)
-      .then(() => {
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      // Add confirmation dialog
+      try {
+        await axios.delete(`/users/${currentUser._id}`);
+
+        // Call the logout function from the context
+        logout();
+
         alert("Account deleted successfully");
         navigate("/");
-      })
-      .catch((error) => {
+      } catch (error) {
         alert("Error deleting account: " + error.message);
-      });
+      }
+    }
   };
 
   if (isLoading) return <div>Loading...</div>;
