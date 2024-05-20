@@ -76,7 +76,10 @@ function ProfilePage() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Container className="profile-page">
+    <Container
+      className="text-white position-relative"
+      style={{ minHeight: "calc(100vh - 185px)" }}
+    >
       <h2>Profile Page</h2>
       <Form onSubmit={handleUpdate}>
         <Form.Group controlId="formUsername">
@@ -120,13 +123,16 @@ function ProfilePage() {
             onChange={handleInputChange}
           />
         </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Update Profile
-        </Button>
-        <Button variant="danger" onClick={handleDelete} className="ml-2">
-          Delete Account
-        </Button>
+        <div className="mt-4">
+          {" "}
+          {/* Add margin-top class */}
+          <Button variant="primary" type="submit" className="me-3">
+            Update Profile
+          </Button>
+          <Button variant="danger" onClick={handleDelete} className="ml-5">
+            Delete Account
+          </Button>
+        </div>
       </Form>
 
       {user?.role === "admin" && (
