@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
-const { AuthContext } = require("../frontend/components/AuthContext");
 
 // Multer configuration for image uploads
 const storage = multer.memoryStorage();
@@ -165,21 +164,21 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Set the token in a cookie
+    // Set both token AND userId in cookies
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       maxAge: 3600000,
+      path: '/'
     });
+    res.cookie("userId", user._id, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+      path: '/'
+    }); // Add this line
 
-    // Call the login function from the context
-    // Call the login function from the context
-    req.login(user, (err) => {
-      if (err) {
-        return next(err); // Handle login errors
-      }
-      res.json({ message: "Logged in successfully", token, userId: user._id });
-    });
+    res.json({ message: "Logged in successfully", token, userId: user._id }); // This is still needed in the response
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
