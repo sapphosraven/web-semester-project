@@ -40,8 +40,8 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/users/:id" element={<ProfilePage />} />
           </Routes>
-          <Footer />
         </Router>
+        <Footer />
       </UserProvider>
     </div>
   );
